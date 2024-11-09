@@ -1,5 +1,6 @@
 const express = require('express');
 const connectDB = require('./db');
+const cors = require('cors');
 const Note = require('./models/Note');
 
 const app = express();
@@ -7,6 +8,7 @@ const app = express();
 connectDB();
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('Welcome to the Notes API');
