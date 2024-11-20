@@ -1,7 +1,12 @@
 const express = require('express');
-const connectDB = require('./db');
 const cors = require('cors');
+const checkEnvVariables = require('dotenv-verifier');
+
 const Note = require('./models/Note');
+const connectDB = require('./db');
+
+const requiredVariables = ['DATABASE_URL'];
+checkEnvVariables(requiredVariables);
 
 const app = express();
 
