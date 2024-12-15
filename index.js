@@ -15,7 +15,7 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res) => {
+app.get('/keep-alive', (req, res) => {
     res.send('Welcome to the Notes API');
 });
 
