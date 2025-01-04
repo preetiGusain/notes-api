@@ -1,15 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const checkEnvVariables = require('dotenv-verifier');
 
 const Note = require('./models/Note');
 const connectDB = require('./db');
 
-const requiredVariables = ['DATABASE_URL'];
-checkEnvVariables(requiredVariables);
-
 const app = express();
-
+require('dotenv').config();
 connectDB();
 
 app.use(express.json());
@@ -102,6 +98,35 @@ app.delete('/delete/:id', async (req, res) => {
             message: 'Note deleted successfully!',
             deletedNote: deletedNote,
         })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: 'Server Error',
+            error: error.message,
+        });
+    }
+});
+
+app.put('/edit/:id', async (req, res) => {
+    try {
+        const noteID = req.params.id;
+        const note = await Note.findById(noteID);
+
+        if(!note) {
+            return res.status(404).json({
+                message: 'Note not found',
+            })
+        }
+
+        note.title = req.body.title || note.title;
+        note.content = req.body.content || note.content;
+
+        const updatedNote = await note.save();
+
+        res.status(200).json({
+            message: 'Note updated successfully!',
+            note: updatedNote
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({
