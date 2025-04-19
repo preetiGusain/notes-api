@@ -11,9 +11,10 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 
+//Root endpoint
 app.get('/keep-alive', (req, res) => {
     console.log("keep-alive");
-    res.send('Welcome to the Notes API');
+    res.json({ message: 'Backend server running' });
 });
 
 app.get('/notes', async (req, res) => {
