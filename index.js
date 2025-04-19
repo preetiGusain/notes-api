@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/keep-alive', (req, res) => {
+    console.log("keep-alive");
     res.send('Welcome to the Notes API');
 });
 
